@@ -1,23 +1,6 @@
-version: '3.8'
-
 services:
-  app:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    ports:
-      - '3000:3000'
-    volumes:
-      - ./:/app
-      - /app/node_modules
-    depends_on:
-      - mongodb
-      - keycloak
-    env_file:
-      - .env
-
   mongodb:
-    image: mongo:6.0
+    image: mongo:8.0.1
     ports:
       - '27017:27017'
     environment:
@@ -29,12 +12,39 @@ services:
 
   keycloak:
     image: quay.io/keycloak/keycloak:26.0.0
-    command: start
+    command: start-dev
     ports:
       - '8080:8080'
     environment:
+      KC_DB: postgres
+      KC_DB_URL: ${KEYCLOAKDB_URL}
+      KC_DB_USERNAME: ${KEYCLOAKDB_USERNAME}
+      KC_DB_PASSWORD: ${KEYCLOAKDB_PASSWORD}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
 
+  postgres:
+    image: postgres:15
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: keycloak
+      POSTGRES_USER: ${POSTGRES_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+  
+  minio:
+    image: quay.io/minio/minio
+    command: server /data --console-address ":9001"
+    ports:
+      - '9000:9000'
+      - '9001:9001'
+    volumes:
+      - 'minio_data:/data'
+    environment:
+      - MINIO_ROOT_USER=${MINIO_USERNAME}
+      - MINIO_ROOT_PASSWORD=${MINIO_PASSWORD}
+
 volumes:
   mongo_data:
+  postgres_data:
+  minio_data:
