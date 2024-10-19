@@ -1,0 +1,20 @@
+version = 1
+
+test_patterns = ["__test__/**/*.test.tsx"]
+
+exclude_patterns = [".husky"]
+
+[[analyzers]]
+name = "javascript"
+
+  [analyzers.meta]
+  plugins = ["react"]
+  environment = [
+    "nodejs",
+    "browser",
+    "mongo",
+    "vitest"
+  ]
+
+[[transformers]]
+name = "prettier"
