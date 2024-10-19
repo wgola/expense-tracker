@@ -1,6 +1,6 @@
 version = 1
 
-test_patterns = ["__test__/**/*.test.tsx"]
+test_patterns = ["__test__/**/*.test.tsx", "__test__/**/*.test.ts"]
 
 exclude_patterns = [".husky"]
 
