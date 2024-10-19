@@ -1,23 +1,36 @@
 FROM node:20.18.0-alpine3.19 as builder
 
-RUN apk add --no-cache libc6-compat
+RUN apk add --no-cache libc6-compat=1.1.0-r4
 
 WORKDIR /app
-RUN npm install -g pnpm
+RUN npm install -g pnpm@9.12.1
 COPY package.json .
 RUN pnpm install
 COPY . .
 RUN pnpm build
 
-FROM node:20.18.0-alpine3.19
-
+FROM node:20.18.0-alpine3.19 AS runner
 WORKDIR /app
-COPY --from=builder /app ./
 
-RUN apk add curl
+ENV NODE_ENV=production
+
+RUN addgroup -g 1001 -S nodejs
+RUN adduser -S nextjs -u 1001
+
+COPY --from=builder /app/public ./public
+
+COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+
+EXPOSE 8080
+
+ENV PORT=8080
+
+RUN apk add --no-cache curl=8.9.1-r1
 HEALTHCHECK --interval=30s --timeout=3s \
     CMD curl -f http://localhost:3000 || exit 1
 
-EXPOSE 3000
+USER nextjs
 
-CMD ["node", "server.js"]
+ENTRYPOINT HOSTNAME="0.0.0.0" node server.js
+
