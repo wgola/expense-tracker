@@ -5,6 +5,12 @@ test_patterns = ["__test__/**/*.test.tsx"]
 exclude_patterns = [".husky"]
 
 [[analyzers]]
+name = "test-coverage"
+
+[[analyzers]]
+name = "docker"
+
+[[analyzers]]
 name = "javascript"
 
   [analyzers.meta]
