@@ -8,7 +8,8 @@
     "start": "next start",
     "lint": "next lint",
     "prepare": "husky",
-    "test": "vitest --coverage"
+    "test": "vitest --coverage",
+    "prettier": "npx prettier --list-different ."
   },
   "dependencies": {
     "next": "14.2.15",
