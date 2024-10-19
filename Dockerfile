@@ -32,5 +32,5 @@ HEALTHCHECK --interval=30s --timeout=3s \
 
 USER nextjs
 
-ENTRYPOINT [ "HOSTNAME='0.0.0.0'", "node", "server.js"]
+ENTRYPOINT ["HOSTNAME='0.0.0.0'", "node", "server.js"]
 
