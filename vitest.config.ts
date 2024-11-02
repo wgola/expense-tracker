@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitest/config';
+import { configDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -10,6 +11,12 @@ export default defineConfig({
       reporter: ['cobertura'],
       provider: 'istanbul',
       reportsDirectory: './reports/coverage'
-    }
+    },
+    exclude: [
+      ...configDefaults.exclude,
+      './tailwind.config.ts',
+      './postcss.config.mjs',
+      './next.config.mjs'
+    ]
   }
 });
