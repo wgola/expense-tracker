@@ -6,7 +6,7 @@ export default function Home() {
       <div className="mb-4">
         <Image src={'/images/app-logo.svg'} alt="App Logo" width={100} height={100} />
       </div>
-      <h1 className="text-3xl font-bold mb-2">Expense Tracker</h1>
+      <h1 className="text-3xl font-bold mb-2 text-center">Expense Tracker</h1>
       <p className="text-center text-gray-600 mb-6">
         Track your expenses effortlessly and save more!
       </p>
