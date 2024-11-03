@@ -13,9 +13,10 @@ export default defineConfig({
     },
     exclude: [
       ...configDefaults.exclude,
-      'tailwind.config.ts',
-      'postcss.config.mjs',
-      'next.config.mjs'
+      '**/{tailwind,postcss,next,vitest,database,storage}.config.*',
+      '**/instrumenation.ts',
+      '**/schemas/**',
+      '**/models/**'
     ]
   }
 });
