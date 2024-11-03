@@ -1,4 +1,4 @@
-import { defineConfig, configDefaults } from 'vitest/config';
+import { defineConfig, configDefaults, coverageConfigDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
@@ -9,14 +9,14 @@ export default defineConfig({
       enabled: true,
       reporter: ['cobertura'],
       provider: 'istanbul',
-      reportsDirectory: './reports/coverage'
-    },
-    exclude: [
-      ...configDefaults.exclude,
-      '**/{tailwind,postcss,next,vitest,database,storage}.config.*',
-      '**/instrumenation.ts',
-      '**/schemas/**',
-      '**/models/**'
-    ]
+      reportsDirectory: './reports/coverage',
+      exclude: [
+        ...coverageConfigDefaults.exclude,
+        '**/{tailwind,postcss,next,vitest,database,storage}.config.*',
+        '**/instrumentation.ts',
+        '**/schemas/**',
+        '**/models/**'
+      ]
+    }
   }
 });
