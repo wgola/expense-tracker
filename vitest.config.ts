@@ -1,4 +1,4 @@
-import { defineConfig, configDefaults, coverageConfigDefaults } from 'vitest/config';
+import { defineConfig, coverageConfigDefaults } from 'vitest/config';
 import react from '@vitejs/plugin-react';
 
 export default defineConfig({
