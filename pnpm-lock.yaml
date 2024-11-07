@@ -20,6 +20,9 @@ importers:
       next:
         specifier: 15.0.2
         version: 15.0.2(@babel/core@7.26.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      next-auth:
+        specifier: ^4.24.10
+        version: 4.24.10(next@15.0.2(@babel/core@7.26.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
       react:
         specifier: 19.0.0-rc-02c0e824-20241028
         version: 19.0.0-rc-02c0e824-20241028
@@ -869,6 +872,12 @@ packages:
         integrity: sha512-nn5ozdjYQpUCZlWGuxcJY/KpxkWQs4DcbMCmKojjyrYDEAGy4Ce19NN4v5MduafTwJlbKc99UA8YhSVqq9yPZA==
       }
     engines: { node: '>=12.4.0' }
+
+  '@panva/hkdf@1.2.1':
+    resolution:
+      {
+        integrity: sha512-6oclG6Y3PiDFcoyk8srjLfVKyMfVCKJ27JwNPViuXziFpmdz+MZnZN/aKY0JGXgYuO/VghU0jcOAZgWXZ1Dmrw==
+      }
 
   '@pkgjs/parseargs@0.11.0':
     resolution:
@@ -1734,6 +1743,13 @@ packages:
       {
         integrity: sha512-Kvp459HrV2FEJ1CAsi1Ku+MY3kasH19TFykTz2xWmMeq6bk2NU3XXvfJ+Q61m0xktWwt+1HSYf3JZsTms3aRJg==
       }
+
+  cookie@0.7.2:
+    resolution:
+      {
+        integrity: sha512-yki5XnKuf750l50uGTllt6kKILY4nQ1eNIQatoXEByZ5dWgnKqbnqmTrBE5B4N7lrMJKQ2ytWMiTO2o0v6Ew/w==
+      }
+    engines: { node: '>= 0.6' }
 
   cross-spawn@7.0.3:
     resolution:
@@ -2925,6 +2941,12 @@ packages:
       }
     hasBin: true
 
+  jose@4.15.9:
+    resolution:
+      {
+        integrity: sha512-1vUQX+IdDMVPj4k8kOxgUqlcK518yluMuGZwqlr44FS1ppZB/5GWh4rZG89erpOBOJjU/OBsnCVFfapsRz6nEA==
+      }
+
   js-tokens@4.0.0:
     resolution:
       {
@@ -3116,6 +3138,13 @@ packages:
       {
         integrity: sha512-KpNARQA3Iwv+jTA0utUVVbrh+Jlrr1Fv0e56GGzAFOXN7dk/FviaDW8LHmK52DlcH4WP2n6gI8vN1aesBFgo9w==
       }
+
+  lru-cache@6.0.0:
+    resolution:
+      {
+        integrity: sha512-Jo6dJ04CmSjuznwJSS3pUeWmd/H0ffTlkXXgwZi+eq1UCmqQwCh+eLsYOYCwY991i2Fah4h1BEMCx4qThGbsiA==
+      }
+    engines: { node: '>=10' }
 
   lz-string@1.5.0:
     resolution:
@@ -3313,6 +3342,23 @@ packages:
         integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==
       }
 
+  next-auth@4.24.10:
+    resolution:
+      {
+        integrity: sha512-8NGqiRO1GXBcVfV8tbbGcUgQkAGsX4GRzzXXea4lDikAsJtD5KiEY34bfhUOjHLvr6rT6afpcxw2H8EZqOV6aQ==
+      }
+    peerDependencies:
+      '@auth/core': 0.34.2
+      next: ^12.2.5 || ^13 || ^14 || ^15
+      nodemailer: ^6.6.5
+      react: ^17.0.2 || ^18
+      react-dom: ^17.0.2 || ^18
+    peerDependenciesMeta:
+      '@auth/core':
+        optional: true
+      nodemailer:
+        optional: true
+
   next@15.0.2:
     resolution:
       {
@@ -3363,12 +3409,25 @@ packages:
         integrity: sha512-cTGB9ptp9dY9A5VbMSe7fQBcl/tt22Vcqdq8+eN93rblOuE0aCFu4aZ2vMwct/2t+lFnosm8RkQW1I0Omb1UtQ==
       }
 
+  oauth@0.9.15:
+    resolution:
+      {
+        integrity: sha512-a5ERWK1kh38ExDEfoO6qUHJb32rd7aYmPHuyCu3Fta/cnICvYmgd2uhuKXvPD+PXB+gCEYYEaQdIRAjCOwAKNA==
+      }
+
   object-assign@4.1.1:
     resolution:
       {
         integrity: sha512-rJgTQnkUnH1sFw8yT6VSU3zD3sWmu6sZhIseY8VX+GRu3P6F7Fu+JNDoXfklElbLJSnc3FUQHVe4cU5hj+BcUg==
       }
     engines: { node: '>=0.10.0' }
+
+  object-hash@2.2.0:
+    resolution:
+      {
+        integrity: sha512-gScRMn0bS5fH+IuwyIFgnh9zBdo4DV+6GhygmWM9HyNJSgS0hScp1f5vjtm7oIIOiT9trXrShAkLFSc2IqKNgw==
+      }
+    engines: { node: '>= 6' }
 
   object-hash@3.0.0:
     resolution:
@@ -3426,6 +3485,13 @@ packages:
       }
     engines: { node: '>= 0.4' }
 
+  oidc-token-hash@5.0.3:
+    resolution:
+      {
+        integrity: sha512-IF4PcGgzAr6XXSff26Sk/+P4KZFJVuHAJZj3wgO3vX2bMdNVp/QXTP3P7CEm9V1IdG8lDLY3HhiqpsE/nOwpPw==
+      }
+    engines: { node: ^10.13.0 || >=12.0.0 }
+
   onetime@6.0.0:
     resolution:
       {
@@ -3439,6 +3505,12 @@ packages:
         integrity: sha512-VXJjc87FScF88uafS3JllDgvAm+c/Slfz06lorj2uAY34rlUu0Nt+v8wreiImcrgAjjIHp1rXpTDlLOGw29WwQ==
       }
     engines: { node: '>=18' }
+
+  openid-client@5.7.0:
+    resolution:
+      {
+        integrity: sha512-4GCCGZt1i2kTHpwvaC/sCpTpQqDnBzDzuJcJMbH+y1Q5qI8U8RBvoSh28svarXszZHR5BAMXbJPX1PGPRE3VOA==
+      }
 
   optionator@0.9.4:
     resolution:
@@ -3638,6 +3710,20 @@ packages:
       }
     engines: { node: ^10 || ^12 || >=14 }
 
+  preact-render-to-string@5.2.6:
+    resolution:
+      {
+        integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==
+      }
+    peerDependencies:
+      preact: '>=10'
+
+  preact@10.24.3:
+    resolution:
+      {
+        integrity: sha512-Z2dPnBnMUfyQfSQ+GBdsGa16hz35YmLmtTLhM169uW944hYL6xzTYkJjC07j+Wosz733pMWx0fgON3JNw1jJQA==
+      }
+
   prelude-ls@1.2.1:
     resolution:
       {
@@ -3659,6 +3745,12 @@ packages:
         integrity: sha512-Qb1gy5OrP5+zDf2Bvnzdl3jsTf1qXVMazbvCoKhtKqVs4/YK4ozX4gKQJJVyNe+cajNPn0KoC0MC3FUmaHWEmQ==
       }
     engines: { node: ^10.13.0 || ^12.13.0 || ^14.15.0 || >=15.0.0 }
+
+  pretty-format@3.8.0:
+    resolution:
+      {
+        integrity: sha512-WuxUnVtlWL1OfZFQFuqvnvs6MiAGk9UNsBostyBOB0Is9wb5uRESevA6rnl/rkksXaGX3GzZhPup5d6Vp1nFew==
+      }
 
   prop-types@15.8.1:
     resolution:
@@ -4427,6 +4519,13 @@ packages:
         integrity: sha512-kZf/K6hEIrWHI6XqOFUiiMa+79wE/D8Q+NCNAWclkyg3b4d2k7s0QGepNjiABc+aR3N1PAyHL7p6UcLY6LmrnA==
       }
 
+  uuid@8.3.2:
+    resolution:
+      {
+        integrity: sha512-+NYs2QeMWy+GWFOEm9xnn6HCDp0l7QBD7ml8zLUmJ+93Q5NF0NocErnwkTkXVFNiX3/fpC6afS8Dhb/gz7R7eg==
+      }
+    hasBin: true
+
   vite-node@2.1.2:
     resolution:
       {
@@ -4662,6 +4761,12 @@ packages:
     resolution:
       {
         integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==
+      }
+
+  yallist@4.0.0:
+    resolution:
+      {
+        integrity: sha512-3wdGidZyq5PB084XLES5TpOSRA3wjXAlIWMhum2kRcv/41Sn2emQ0dycQW4uZXLejwKvg6EsvbdlVL+FYEct7A==
       }
 
   yaml@2.5.1:
@@ -5085,6 +5190,8 @@ snapshots:
       fastq: 1.17.1
 
   '@nolyfill/is-core-module@1.0.39': {}
+
+  '@panva/hkdf@1.2.1': {}
 
   '@pkgjs/parseargs@0.11.0':
     optional: true
@@ -5627,6 +5734,8 @@ snapshots:
 
   convert-source-map@2.0.0: {}
 
+  cookie@0.7.2: {}
+
   cross-spawn@7.0.3:
     dependencies:
       path-key: 3.1.1
@@ -5906,7 +6015,7 @@ snapshots:
       debug: 4.3.7
       enhanced-resolve: 5.17.1
       eslint: 9.14.0(jiti@1.21.6)
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.14.0(jiti@1.21.6)))(eslint@9.14.0(jiti@1.21.6))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.14.0(jiti@1.21.6))
       fast-glob: 3.3.2
       get-tsconfig: 4.8.1
       is-bun-module: 1.2.1
@@ -5919,7 +6028,7 @@ snapshots:
       - eslint-import-resolver-webpack
       - supports-color
 
-  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.14.0(jiti@1.21.6)))(eslint@9.14.0(jiti@1.21.6)):
+  eslint-module-utils@2.12.0(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.14.0(jiti@1.21.6)):
     dependencies:
       debug: 3.2.7
     optionalDependencies:
@@ -5941,7 +6050,7 @@ snapshots:
       doctrine: 2.1.0
       eslint: 9.14.0(jiti@1.21.6)
       eslint-import-resolver-node: 0.3.9
-      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.31.0)(eslint@9.14.0(jiti@1.21.6)))(eslint@9.14.0(jiti@1.21.6))
+      eslint-module-utils: 2.12.0(@typescript-eslint/parser@8.12.2(eslint@9.14.0(jiti@1.21.6))(typescript@5.6.3))(eslint-import-resolver-node@0.3.9)(eslint-import-resolver-typescript@3.6.3)(eslint@9.14.0(jiti@1.21.6))
       hasown: 2.0.2
       is-core-module: 2.15.1
       is-glob: 4.0.3
@@ -6468,6 +6577,8 @@ snapshots:
 
   jiti@1.21.6: {}
 
+  jose@4.15.9: {}
+
   js-tokens@4.0.0: {}
 
   js-yaml@4.1.0:
@@ -6598,6 +6709,10 @@ snapshots:
     dependencies:
       yallist: 3.1.1
 
+  lru-cache@6.0.0:
+    dependencies:
+      yallist: 4.0.0
+
   lz-string@1.5.0: {}
 
   magic-string@0.30.12:
@@ -6714,6 +6829,21 @@ snapshots:
 
   natural-compare@1.4.0: {}
 
+  next-auth@4.24.10(next@15.0.2(@babel/core@7.26.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028))(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028):
+    dependencies:
+      '@babel/runtime': 7.26.0
+      '@panva/hkdf': 1.2.1
+      cookie: 0.7.2
+      jose: 4.15.9
+      next: 15.0.2(@babel/core@7.26.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028)
+      oauth: 0.9.15
+      openid-client: 5.7.0
+      preact: 10.24.3
+      preact-render-to-string: 5.2.6(preact@10.24.3)
+      react: 19.0.0-rc-02c0e824-20241028
+      react-dom: 19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028)
+      uuid: 8.3.2
+
   next@15.0.2(@babel/core@7.26.0)(react-dom@19.0.0-rc-02c0e824-20241028(react@19.0.0-rc-02c0e824-20241028))(react@19.0.0-rc-02c0e824-20241028):
     dependencies:
       '@next/env': 15.0.2
@@ -6749,7 +6879,11 @@ snapshots:
 
   nwsapi@2.2.13: {}
 
+  oauth@0.9.15: {}
+
   object-assign@4.1.1: {}
+
+  object-hash@2.2.0: {}
 
   object-hash@3.0.0: {}
 
@@ -6789,6 +6923,8 @@ snapshots:
       define-properties: 1.2.1
       es-object-atoms: 1.0.0
 
+  oidc-token-hash@5.0.3: {}
+
   onetime@6.0.0:
     dependencies:
       mimic-fn: 4.0.0
@@ -6796,6 +6932,13 @@ snapshots:
   onetime@7.0.0:
     dependencies:
       mimic-function: 5.0.1
+
+  openid-client@5.7.0:
+    dependencies:
+      jose: 4.15.9
+      lru-cache: 6.0.0
+      object-hash: 2.2.0
+      oidc-token-hash: 5.0.3
 
   optionator@0.9.4:
     dependencies:
@@ -6896,6 +7039,13 @@ snapshots:
       picocolors: 1.1.1
       source-map-js: 1.2.1
 
+  preact-render-to-string@5.2.6(preact@10.24.3):
+    dependencies:
+      preact: 10.24.3
+      pretty-format: 3.8.0
+
+  preact@10.24.3: {}
+
   prelude-ls@1.2.1: {}
 
   prettier@3.3.3: {}
@@ -6905,6 +7055,8 @@ snapshots:
       ansi-regex: 5.0.1
       ansi-styles: 5.2.0
       react-is: 17.0.2
+
+  pretty-format@3.8.0: {}
 
   prop-types@15.8.1:
     dependencies:
@@ -7433,6 +7585,8 @@ snapshots:
       is-typed-array: 1.1.13
       which-typed-array: 1.1.15
 
+  uuid@8.3.2: {}
+
   vite-node@2.1.2(@types/node@20.17.5):
     dependencies:
       cac: 6.7.14
@@ -7603,6 +7757,8 @@ snapshots:
   xmlchars@2.2.0: {}
 
   yallist@3.1.1: {}
+
+  yallist@4.0.0: {}
 
   yaml@2.5.1: {}
 

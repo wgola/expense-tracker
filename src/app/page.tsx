@@ -1,4 +1,7 @@
+'use client';
+
 import Image from 'next/image';
+import { signIn } from 'next-auth/react';
 
 export default function Home() {
   return (
@@ -11,7 +14,9 @@ export default function Home() {
         Track your expenses effortlessly and save more!
       </p>
       <div className="flex flex-col space-y-2 w-full max-w-xs">
-        <button className="btn btn-primary w-full">Login</button>
+        <button className="btn btn-primary w-full" onClick={() => signIn('keycloak')}>
+          Login
+        </button>
         <div className="divider divider-accent">OR</div>
         <button className="btn btn-secondary w-full">Sign Up</button>
       </div>
