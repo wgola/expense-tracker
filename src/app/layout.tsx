@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import '../../public/styles/globals.css';
+import SessionWrapper from './providers/SessionProvider';
 
 export const metadata: Metadata = {
   title: 'Expense Tracker',
@@ -12,8 +13,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className="antialiased">{children}</body>
-    </html>
+    <SessionWrapper>
+      <html lang="en">
+        <body className="antialiased">{children}</body>
+      </html>
+    </SessionWrapper>
   );
 }
