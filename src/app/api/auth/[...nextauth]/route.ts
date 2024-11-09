@@ -1,9 +1,10 @@
 import NextAuth from 'next-auth';
 import KeycloakProvider from 'next-auth/providers/keycloak';
+import { env } from 'process';
 
-const clientId = process.env.KEYCLOAK_CLIENT_ID || '';
-const clientSecret = process.env.KEYCLOAK_CLIENT_SECRET || '';
-const issuer = process.env.KEYCLOAK_ISSUER || '';
+const clientId = env.KEYCLOAK_CLIENT_ID || '';
+const clientSecret = env.KEYCLOAK_CLIENT_SECRET || '';
+const issuer = env.KEYCLOAK_ISSUER || '';
 
 export const authOptions = {
   providers: [
