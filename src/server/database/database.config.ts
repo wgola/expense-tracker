@@ -1,10 +1,9 @@
 import { connect } from 'mongoose';
-import { env } from 'process';
 
-const uri = env.MONGO_URI || 'mongodb://localhost:27017';
-const dbName = env.MONGO_DB || 'test';
-const user = env.MONGO_USERNAME || '';
-const pass = env.MONGO_PASSWORD || '';
+const uri = process.env.MONGO_URI || 'mongodb://localhost:27017';
+const dbName = process.env.MONGO_DB || 'test';
+const user = process.env.MONGO_USERNAME || '';
+const pass = process.env.MONGO_PASSWORD || '';
 
 export const connectToDatabase = async () => {
   try {
