@@ -1,9 +1,16 @@
-'use client';
-
 import Image from 'next/image';
-import { signIn } from 'next-auth/react';
+import { getServerSession } from 'next-auth';
+import { authOptions } from './api/auth/[...nextauth]/route';
+import { redirect } from 'next/navigation';
+import LogIn from '@/components/logIn';
 
-export default function Home() {
+export default async function Main() {
+  const session = await getServerSession(authOptions);
+
+  if (session) {
+    redirect('/home');
+  }
+
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">
       <div className="mb-4">
@@ -14,11 +21,7 @@ export default function Home() {
         Track your expenses effortlessly and save more!
       </p>
       <div className="flex flex-col space-y-2 w-full max-w-xs">
-        <button className="btn btn-primary w-full" onClick={() => signIn('keycloak')}>
-          Login
-        </button>
-        <div className="divider divider-accent">OR</div>
-        <button className="btn btn-secondary w-full">Sign Up</button>
+        <LogIn />
       </div>
     </div>
   );
