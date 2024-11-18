@@ -13,7 +13,7 @@ function requestRefreshOfAccessToken(token: JWT) {
       client_id: clientId,
       client_secret: clientSecret,
       grant_type: 'refresh_token',
-      refresh_token: token.refreshToken! as string
+      refresh_token: token.refreshToken as string
     }),
     method: 'POST',
     cache: 'no-store'
@@ -43,7 +43,7 @@ export const authOptions: AuthOptions = {
         return token;
       }
 
-      if (Date.now() < (token.expiresAt! as number) * 1000 - 60 * 1000) {
+      if (Date.now() < ((token.expiresAt as number) ?? 0) * 1000 - 60 * 1000) {
         return token;
       } else {
         try {
@@ -54,7 +54,7 @@ export const authOptions: AuthOptions = {
           if (!response.ok) throw tokens;
 
           const updatedToken: JWT = {
-            ...token, // Keep the previous token properties
+            ...token,
             idToken: tokens.id_token,
             accessToken: tokens.access_token,
             expiresAt: Math.floor(Date.now() / 1000 + (tokens.expires_in as number)),
@@ -67,7 +67,7 @@ export const authOptions: AuthOptions = {
         }
       }
     },
-    async session({ session, token }) {
+    session({ session, token }) {
       return { ...session, accessToken: token.accessToken, error: token.error };
     }
   }
