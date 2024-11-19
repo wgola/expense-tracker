@@ -10,7 +10,7 @@ export default async function federatedLogout() {
       return;
     }
     throw new Error(data.error);
-  } catch (error) {
+  } catch {
     await signOut({ redirect: false });
     window.location.href = '/';
   }
