@@ -1,5 +1,6 @@
 'use client';
 
+import { AddExpenseForm } from '@/components/addExpenseForm';
 import Navbar from '@/components/navbar';
 import { useSession } from 'next-auth/react';
 
@@ -12,7 +13,10 @@ export default function Home() {
       {status === 'loading' && <p>Loading...</p>}
       {status === 'unauthenticated' && <></>}
       {status === 'authenticated' && (
-        <h1 className="text-4xl font-bold text-gray-800 mt-8">Hello, {session?.user?.name}!</h1>
+        <>
+          <h1 className="text-4xl font-bold text-gray-800 mt-8">Hello, {session?.user?.name}!</h1>
+          <AddExpenseForm />
+        </>
       )}
     </div>
   );
