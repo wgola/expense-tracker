@@ -23,8 +23,11 @@ export function AddExpenseForm() {
 
   return (
     <form action={formAction}>
-      <label htmlFor="todo">Enter Receipt</label>
-      <input type="text" id="receipt" name="receipt" required />
+      <label htmlFor="imageName">Image Name:</label>
+      <input type="text" id="imageName" name="imageName" placeholder="Enter image name" required />
+
+      <label htmlFor="image">Choose an image:</label>
+      <input type="file" id="image" name="image" accept="image/*" capture required />
       <SubmitButton />
       <p aria-live="polite" className="sr-only" role="status">
         {state?.message}
