@@ -16,11 +16,19 @@ export async function createReceipt(
   const session = await getServerSession(authOptions);
 
   const schema = z.object({
-    imageName: z.string()
+    owner: z.string(),
+    imageName: z.string(),
+    category: z.string(),
+    date: z.date(),
+    totalCost: z.number()
   });
 
   const parse = schema.safeParse({
-    imageName: formData.get('imageName')
+    owner: session?.user,
+    imageName: formData.get('imageName'),
+    category: formData.get('category'),
+    date: formData.get('date'),
+    totalCost: formData.get('totalCost')
   });
 
   if (!parse.success) {
@@ -35,16 +43,10 @@ export async function createReceipt(
     }
     const fileBuffer = Buffer.from(await file.arrayBuffer());
 
-    const x = await uploadReceipt(parse.data.imageName, fileBuffer);
-    console.log(x);
+    await uploadReceipt(parse.data.imageName, fileBuffer);
 
-    // const receipt = new Receipt({
-    //   owner: session?.user,
-    //   imageName: parse.data.imageName
-    //   totalCost: data.totalCost,
-    //   date: new Date(data.date)
-    // });
-    // await receipt.save();
+    const receipt = new Receipt({ ...parse.data });
+    await receipt.save();
 
     revalidatePath('/');
     return { message: `Added receipt ${parse.data.imageName}` };
