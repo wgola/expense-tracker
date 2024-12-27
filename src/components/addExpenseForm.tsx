@@ -12,7 +12,7 @@ function SubmitButton() {
   const { pending } = useFormStatus();
 
   return (
-    <button type="submit" className="btn btn-primary my-5" aria-disabled={pending}>
+    <button type="submit" className="btn btn-primary" aria-disabled={pending}>
       Add
     </button>
   );
@@ -36,8 +36,8 @@ export function AddExpenseForm() {
   };
 
   return (
-    <form action={formAction} className="flex flex-col space-y-1 max-w-xs mx-auto">
-      <label htmlFor="image" className="mb-2 text-sm font-medium">
+    <form action={formAction} className="flex flex-col space-y-2 mb-3 max-w-xs mx-auto">
+      <label htmlFor="image" className="text-sm font-medium">
         Choose an image:
       </label>
       <input
@@ -54,8 +54,8 @@ export function AddExpenseForm() {
           <img src={imagePreview} width={125} height={125} alt="Selected" />
         </div>
       )}
-      <label htmlFor="category" className="mb-2 text-sm font-medium">
-        Category
+      <label htmlFor="category" className="text-sm font-medium">
+        Category:
       </label>
       <input
         type="text"
@@ -65,7 +65,7 @@ export function AddExpenseForm() {
         className="input input-bordered w-full max-w-xs"
         required
       />
-      <label htmlFor="date" className="mb-2 text-sm font-medium">
+      <label htmlFor="date" className="text-sm font-medium">
         Date:
       </label>
       <input
@@ -76,7 +76,7 @@ export function AddExpenseForm() {
         className="input input-bordered w-full max-w-xs"
         required
       />
-      <label htmlFor="cost" className="mb-2 text-sm font-medium">
+      <label htmlFor="cost" className="text-sm font-medium">
         Total cost:
       </label>
       <input
