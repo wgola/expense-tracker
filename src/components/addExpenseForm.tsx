@@ -35,6 +35,14 @@ export function AddExpenseForm() {
     }
   };
 
+  const clearImagePreview = () => {
+    setImagePreview(null);
+    const fileInput = document.getElementById('image') as HTMLInputElement;
+    if (fileInput) {
+      fileInput.value = '';
+    }
+  };
+
   return (
     <form action={formAction} className="flex flex-col space-y-2 mb-3 max-w-xs mx-auto">
       <label htmlFor="image" className="text-sm font-medium">
@@ -50,8 +58,15 @@ export function AddExpenseForm() {
         required
       />
       {imagePreview && (
-        <div className="mt-2 self-center">
+        <div className="relative flex justify-center">
           <img src={imagePreview} width={125} height={125} alt="Selected" />
+          <button
+            type="button"
+            onClick={clearImagePreview}
+            className="absolute top-0 right-0 bg-red-500 text-white rounded-full w-6 h-6"
+          >
+            &times;
+          </button>
         </div>
       )}
       <label htmlFor="category" className="text-sm font-medium">
