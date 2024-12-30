@@ -3,7 +3,9 @@ import { z } from 'zod';
 export const receiptSchema = z.object({
   owner: z.string(),
   imageName: z.string(),
-  category: z.string(),
-  date: z.date(),
-  totalCost: z.number().min(0)
+  category: z.string().min(3),
+  date: z.date().refine((date) => date >= new Date(), {
+    message: 'Date should be from the past'
+  }),
+  totalCost: z.number()
 });

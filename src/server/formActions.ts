@@ -6,16 +6,14 @@ import { uploadReceipt } from '@/server/storage/storage.functions';
 import { getServerSession } from 'next-auth';
 import { revalidatePath } from 'next/cache';
 import { receiptSchema } from '@/utils/receiptValidation';
+import { redirect } from 'next/navigation';
+import { FormState } from '../types';
+import { convertZodErrors } from '@/utils/convertZodErrors';
 
-export async function createReceipt(
-  prevState: {
-    message: string;
-  },
-  formData: FormData
-) {
+export async function createReceipt(prevState: FormState, formData: FormData): Promise<FormState> {
   const session = await getServerSession(authOptions);
 
-  const parse = receiptSchema.safeParse({
+  const validated = receiptSchema.safeParse({
     owner: session?.user?.name,
     imageName: '',
     category: formData.get('category'),
@@ -23,15 +21,21 @@ export async function createReceipt(
     totalCost: parseFloat(formData.get('totalCost') as string) || 0
   });
 
-  if (!parse.success) {
-    console.log(parse.error);
-    return { message: 'Failed to create a receipt' };
+  if (!validated.success) {
+    const errors = convertZodErrors(validated.error);
+    return {
+      errors,
+      data: validated.data
+    };
   }
 
   try {
     const file = formData.get('image') as File;
     if (!file) {
-      return { message: 'No file uploaded' };
+      return {
+        pictureError: 'No picture uploaded',
+        data: validated.data
+      };
     }
     const fileBuffer = Buffer.from(await file.arrayBuffer());
 
@@ -39,10 +43,16 @@ export async function createReceipt(
 
     // const receipt = new Receipt({ ...parse.data });
     // await receipt.save();
+    // redirect(`/home`);
 
     // revalidatePath('/');
-    return { message: `Added receipt ${parse.data.imageName}` };
+    return {
+      successMsg: 'Receipt added successfully!'
+    };
   } catch (e) {
-    return { message: 'Failed to create receipt' };
+    return {
+      pictureError: 'Error uploading image',
+      data: validated.data
+    };
   }
 }
