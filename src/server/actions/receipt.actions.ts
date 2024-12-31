@@ -1,6 +1,6 @@
 'use server';
 
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import { getServerSession } from 'next-auth';
 import { receiptSchema } from '@/utils/receiptValidation';
 import { FormState } from '@/types/form-state.interface';
@@ -50,7 +50,7 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
     receipt.imageName = imageName;
 
     await Receipt.create(receipt);
-  } catch (e) {
+  } catch {
     return {
       pictureError: 'Error uploading image',
       data: validated.data

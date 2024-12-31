@@ -1,6 +1,6 @@
 import { Receipt } from '@/server/database/models/receipt.model';
 import { getServerSession } from 'next-auth';
-import { authOptions } from '@/app/api/auth/[...nextauth]/route';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
 import { IReceipt } from '@/types/receipt.interface';
 import { getReceiptUrlByName } from '@/server/storage/storage.functions';
 
