@@ -1,41 +1,36 @@
-import { ChangeEvent, useState } from 'react';
+'use client';
+
+import { ChangeEvent, useRef, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
+import Image from 'next/image';
 
-export function ImageInput() {
+export default function ImageInput() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
-      reader.onload = () => {
-        if (typeof reader.result === 'string') {
-          setImagePreview(reader.result);
-        }
-      };
+      reader.onload = () => setImagePreview(reader.result as string);
       reader.readAsDataURL(file);
     }
   };
 
   const clearImagePreview = () => {
     setImagePreview(null);
-    const fileInput = document.getElementById('image') as HTMLInputElement;
-    if (fileInput) {
-      fileInput.value = '';
-    }
+    fileInputRef.current!.value = '';
   };
+
   return (
     <div className="flex flex-col space-y-2">
       <label htmlFor="image" className="text-sm font-medium">
         Choose an image:
       </label>
       {imagePreview ? (
-        <div
-          className="relative flex justify-center cursor-pointer"
-          onClick={() => document.getElementById('image')?.click()}
-        >
-          <img src={imagePreview} width={125} height={125} alt="Selected" />
+        <div className="relative flex justify-center">
+          <Image src={imagePreview} width={250} height={250} alt="Selected" />
           <button
             type="button"
             onClick={clearImagePreview}
@@ -45,14 +40,16 @@ export function ImageInput() {
           </button>
         </div>
       ) : (
-        <div
-          className="flex justify-center items-center px-4 h-12 border cursor-pointer"
-          onClick={() => document.getElementById('image')?.click()}
+        <button
+          className="flex justify-center items-center px-4 h-12 border input-bordered"
+          type="button"
+          onClick={() => fileInputRef.current!.click()}
         >
           <FaCamera />
-        </div>
+        </button>
       )}
       <input
+        ref={fileInputRef}
         type="file"
         id="image"
         name="image"

@@ -1,4 +1,5 @@
-import { model } from 'mongoose';
-import { ReceiptSchema } from '../schemas/receipt.schema';
+import mongoose, { model } from 'mongoose';
+import receiptSchema from '../schemas/receipt.schema';
+import { IReceipt } from '@/types/receipt.interface';
 
-export const Receipt = model('Receipt', ReceiptSchema);
+export const Receipt = mongoose.models.Receipt || model<IReceipt>('Receipt', receiptSchema);

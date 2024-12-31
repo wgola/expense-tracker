@@ -1,29 +1,15 @@
-import React, { useState } from 'react';
-import Logout from '@/components/logout';
-import { IoMdArrowDropdown } from 'react-icons/io';
+import LogOut from '@/components/logOut';
+import Link from 'next/link';
 
-const Navbar = () => {
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
+export default function Navbar() {
   return (
     <nav className="flex justify-between p-4 bg-secondary text-white">
-      <div>Expense Tracker</div>
+      <div>
+        <Link href="/home">Expense Tracker</Link>
+      </div>
       <div className="relative">
-        <button onClick={toggleDropdown}>
-          <IoMdArrowDropdown size={20} />
-        </button>
-        {dropdownOpen && (
-          <div className="absolute right-0">
-            <Logout />
-          </div>
-        )}
+        <LogOut />
       </div>
     </nav>
   );
-};
-
-export default Navbar;
+}

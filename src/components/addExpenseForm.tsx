@@ -1,41 +1,30 @@
 'use client';
 
-import { useActionState, useEffect, useRef } from 'react';
+import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
-import { createReceipt } from '@/server/formActions';
-import toast from 'react-hot-toast';
-import { ImageInput } from './imageInput';
-import { FormState } from '@/types';
-
-const initialState: FormState = {};
-
-function SubmitButton() {
-  const { pending } = useFormStatus();
-
-  return (
-    <button type="submit" className="btn btn-primary" aria-disabled={pending}>
-      Add
-    </button>
-  );
-}
+import { createReceipt } from '@/server/actions/receipt.actions';
+import ImageInput from './imageInput';
+import { FormState } from '@/types/form-state.interface';
 
 export function AddExpenseForm() {
-  const [state, formAction] = useActionState(createReceipt, initialState);
-  const formRef = useRef<HTMLFormElement>(null);
-
-  useEffect(() => {
-    if (state.successMsg) {
-      toast.success(state.successMsg);
-      formRef.current?.reset();
-    }
-  }, [state]);
+  const [state, formAction] = useActionState(createReceipt, {} as FormState);
 
   return (
-    <form
-      action={formAction}
-      className="flex flex-col space-y-1 mb-3 max-w-xs mx-auto"
-      ref={formRef}
-    >
+    <form action={formAction} className="flex flex-col space-y-1 mt-3">
+      <label htmlFor="name" className="text-sm font-medium">
+        Name:
+      </label>
+      <input
+        type="text"
+        id="name"
+        name="name"
+        placeholder="Enter receipt name"
+        className="input input-bordered w-full"
+        required
+      />
+      <div className="h-3 flex self-center justify-self-center">
+        {state.errors?.name && <small className="text-red-400">{state.errors?.name}</small>}
+      </div>
       <ImageInput />
       <div className="h-3 flex self-center justify-self-center">
         {state.errors?.pictureError && (
@@ -50,7 +39,7 @@ export function AddExpenseForm() {
         id="category"
         name="category"
         placeholder="Enter receipt category"
-        className="input input-bordered w-full max-w-xs"
+        className="input input-bordered w-full"
         required
       />
       <div className="h-3 flex self-center justify-self-center">
@@ -64,27 +53,36 @@ export function AddExpenseForm() {
         id="date"
         name="date"
         placeholder="Enter date"
-        className="input input-bordered w-full max-w-xs"
+        className="input input-bordered w-full"
         required
       />
       <div className="h-3 flex self-center justify-self-center">
         {state.errors?.date && <small className="text-red-400">{state.errors?.date}</small>}
       </div>
-      <label htmlFor="cost" className="text-sm font-medium">
+      <label htmlFor="totalCost" className="text-sm font-medium">
         Total cost:
       </label>
       <input
         type="text"
-        id="cost"
-        name="cost"
+        id="totalCost"
+        name="totalCost"
         placeholder="Receipt price"
-        className="input input-bordered w-full max-w-xs"
-        disabled
+        className="input input-bordered w-full"
       />
       <div className="h-3 flex self-center justify-self-center">
         {state.errors?.cost && <small className="text-red-400">{state.errors?.cost}</small>}
       </div>
       <SubmitButton />
     </form>
+  );
+}
+
+function SubmitButton() {
+  const { pending } = useFormStatus();
+
+  return (
+    <button type="submit" className="btn btn-primary" disabled={pending}>
+      Add
+    </button>
   );
 }

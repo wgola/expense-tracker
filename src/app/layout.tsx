@@ -1,6 +1,6 @@
 import type { Metadata } from 'next';
 import '../../public/styles/globals.css';
-import SessionWrapper from './providers/SessionProvider';
+import SessionWrapper from '@/providers/sessionProvider';
 import SessionGuard from '@/components/sessionGuard';
 import { PropsWithChildren } from 'react';
 import { Toaster } from 'react-hot-toast';
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
   description: 'Track your expenses with ease.'
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
   return (
     <html lang="en">
       <body className="antialiased">
