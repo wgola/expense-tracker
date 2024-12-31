@@ -1,6 +1,6 @@
 'use client';
 
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useRef, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 import Image from 'next/image';
@@ -9,19 +9,23 @@ export default function ImageInput() {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleImageChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
       const reader = new FileReader();
       reader.onload = () => setImagePreview(reader.result as string);
       reader.readAsDataURL(file);
     }
-  };
+  }, []);
 
-  const clearImagePreview = () => {
+  const clearImagePreview = useCallback(() => {
     setImagePreview(null);
-    fileInputRef.current!.value = '';
-  };
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
+  }, []);
+
+  const onAddImageClick = useCallback(() => fileInputRef.current?.click(), []);
 
   return (
     <div className="flex flex-col space-y-2">
@@ -43,7 +47,7 @@ export default function ImageInput() {
         <button
           className="flex justify-center items-center px-4 h-12 border input-bordered"
           type="button"
-          onClick={() => fileInputRef.current!.click()}
+          onClick={onAddImageClick}
         >
           <FaCamera />
         </button>
