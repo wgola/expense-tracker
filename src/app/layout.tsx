@@ -3,7 +3,6 @@ import '../../public/styles/globals.css';
 import SessionWrapper from '@/providers/sessionProvider';
 import SessionGuard from '@/components/sessionGuard';
 import { PropsWithChildren } from 'react';
-import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: 'Expense Tracker',
@@ -17,7 +16,6 @@ export default function RootLayout({ children }: Readonly<PropsWithChildren>) {
         <SessionWrapper>
           <SessionGuard>{children}</SessionGuard>
         </SessionWrapper>
-        <Toaster />
       </body>
     </html>
   );

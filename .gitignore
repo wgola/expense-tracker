@@ -40,3 +40,7 @@ realm-conf.json
 .env
 
 .idea
+
+**/.venv
+
+**/__pycache__
