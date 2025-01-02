@@ -2,7 +2,7 @@ FROM python:3.12-alpine3.21
 
 WORKDIR /app
 
-RUN apk add --no-cache tesseract-ocr tesseract-ocr-data-eng
+RUN apk add --no-cache tesseract-ocr-data-eng=5.5.0-r0 tesseract-ocr-data-pol=5.5.0-r0 tesseract-ocr=5.5.0-r0
 
 COPY requirements.txt .
 
