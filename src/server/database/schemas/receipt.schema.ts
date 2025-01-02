@@ -1,10 +1,13 @@
 import { Schema } from 'mongoose';
+import { IReceipt } from '@/types/receipt.interface';
 
-export const ReceiptSchema = new Schema(
+const receiptSchema = new Schema<IReceipt>(
   {
     owner: { type: String, required: true, index: true },
+    name: { type: String, required: true },
     imageName: { type: String, required: false },
     totalCost: { type: Number, required: true },
+    category: { type: String, required: true },
     date: { type: Date, required: true }
   },
   {
@@ -16,3 +19,5 @@ export const ReceiptSchema = new Schema(
     }
   }
 );
+
+export default receiptSchema;
