@@ -11,10 +11,15 @@ import {
   YAxis
 } from 'recharts';
 import { formatCurrency } from '@/utils/formatCurrency';
+import { useCallback } from 'react';
+import { ValueType } from 'recharts/types/component/DefaultTooltipContent';
 
 export default function TotalExpensesByDateChart({
   data
 }: Readonly<{ data: { date: string; totalAmount: number }[] }>) {
+  const tickFormatter = useCallback((tick: number) => formatCurrency(tick), []);
+  const tooltipFormatter = useCallback((value: ValueType) => formatCurrency(value as number), []);
+
   return (
     <ResponsiveContainer width="100%" height={250}>
       <BarChart
@@ -28,10 +33,10 @@ export default function TotalExpensesByDateChart({
       >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="date" />
-        <YAxis tickFormatter={(tick) => formatCurrency(tick)} />
+        <YAxis tickFormatter={tickFormatter} />
         <Tooltip
           cursor={{ fill: 'rgba(211, 211, 211, 0.5)' }}
-          formatter={(value) => formatCurrency(value as number)}
+          formatter={tooltipFormatter}
           separator=": "
         />
         <Bar dataKey="totalAmount" name="Sum of expenses" fill="gray" stroke="black" />
