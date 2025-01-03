@@ -7,7 +7,7 @@ import { IoMdArrowDropdown } from 'react-icons/io';
 export default function LogOut() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
-  const toggleDropdown = useCallback(() => setDropdownOpen(!dropdownOpen), []);
+  const toggleDropdown = useCallback(() => setDropdownOpen((d) => !d), []);
 
   const signOutFromKeycloak = useCallback(() => federatedLogout(), []);
 

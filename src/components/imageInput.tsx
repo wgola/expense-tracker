@@ -12,6 +12,13 @@ export default function ImageInput() {
   const handleImageChange = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
+      const formData = new FormData();
+      formData.append('files', file);
+
+      fetch('http://localhost:5000/api/analyze-receipt', { method: 'POST', body: formData })
+        .then((res) => res.json())
+        .then((data) => console.log(data));
+
       const reader = new FileReader();
       reader.onload = () => setImagePreview(reader.result as string);
       reader.readAsDataURL(file);
@@ -34,7 +41,13 @@ export default function ImageInput() {
       </label>
       {imagePreview ? (
         <div className="relative flex justify-center">
-          <Image src={imagePreview} width={250} height={250} alt="Selected" />
+          <Image
+            src={imagePreview}
+            width={250}
+            height={250}
+            alt="Selected"
+            className="w-9/12 h-auto"
+          />
           <button
             type="button"
             onClick={clearImagePreview}
