@@ -20,6 +20,7 @@ export function AddExpenseForm() {
         name="name"
         placeholder="Enter receipt name"
         className="input input-bordered w-full"
+        defaultValue={state.data?.name}
         required
       />
       <div className="h-3 flex self-center justify-self-center">
@@ -40,6 +41,7 @@ export function AddExpenseForm() {
         name="category"
         placeholder="Enter receipt category"
         className="input input-bordered w-full"
+        defaultValue={state.data?.category}
         required
       />
       <div className="h-3 flex self-center justify-self-center">
@@ -54,6 +56,7 @@ export function AddExpenseForm() {
         name="date"
         placeholder="Enter date"
         className="input input-bordered w-full"
+        defaultValue={state.data?.date ? state.data.date.toISOString().split('T')[0] : undefined}
         required
       />
       <div className="h-3 flex self-center justify-self-center">
@@ -67,10 +70,13 @@ export function AddExpenseForm() {
         id="totalCost"
         name="totalCost"
         placeholder="Receipt price"
+        defaultValue={state.data?.totalCost}
         className="input input-bordered w-full"
       />
       <div className="h-3 flex self-center justify-self-center">
-        {state.errors?.cost && <small className="text-red-400">{state.errors?.cost}</small>}
+        {state.errors?.totalcost && (
+          <small className="text-red-400">{state.errors?.totalcost}</small>
+        )}
       </div>
       <SubmitButton />
     </form>
