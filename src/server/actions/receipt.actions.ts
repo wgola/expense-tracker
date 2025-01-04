@@ -19,6 +19,7 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
     owner: session?.user?.email as string,
     name: formData.get('name') as string,
     imageName: '',
+    image: formData.get('image') as File,
     category: formData.get('category') as string,
     date: new Date(formData.get('date') as string),
     totalCost: parseFloat(formData.get('totalCost') as string) || 0
@@ -28,16 +29,9 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
 
   if (!validated.success) {
     const errors = convertZodErrors(validated.error);
+    console.log(errors);
     return {
       errors,
-      data: unvalidated
-    };
-  }
-
-  const file = formData.get('image') as File;
-  if (!file) {
-    return {
-      pictureError: 'No picture uploaded',
       data: unvalidated
     };
   }
@@ -45,8 +39,8 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
   try {
     const receipt = { ...validated.data };
 
-    const imageName = generateFileName(receipt, file);
-    const fileBuffer = Buffer.from(await file.arrayBuffer());
+    const imageName = generateFileName(receipt, receipt.image);
+    const fileBuffer = Buffer.from(await receipt.image.arrayBuffer());
 
     await uploadReceipt(imageName, fileBuffer);
 
