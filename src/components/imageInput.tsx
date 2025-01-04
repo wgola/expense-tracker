@@ -1,11 +1,15 @@
 'use client';
 
-import { ChangeEvent, useCallback, useRef, useState } from 'react';
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
 import { FaCamera } from 'react-icons/fa';
 import { MdOutlineCancel } from 'react-icons/md';
 import Image from 'next/image';
 
-export default function ImageInput() {
+interface ImageInputProps {
+  clearTrigger?: boolean; // New prop to trigger clearing
+}
+
+export default function ImageInput({ clearTrigger }: ImageInputProps) {
   const [imagePreview, setImagePreview] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -32,6 +36,10 @@ export default function ImageInput() {
     }
   }, []);
 
+  useEffect(() => {
+    clearImagePreview();
+  }, [clearTrigger]);
+
   const onAddImageClick = useCallback(() => fileInputRef.current?.click(), []);
 
   return (
@@ -52,6 +60,7 @@ export default function ImageInput() {
             type="button"
             onClick={clearImagePreview}
             className="absolute top-0 right-0 rounded-full w-6 h-6"
+            aria-label="Remove Selected Image"
           >
             <MdOutlineCancel />
           </button>
@@ -61,6 +70,7 @@ export default function ImageInput() {
           className="flex justify-center items-center px-4 h-12 border input-bordered"
           type="button"
           onClick={onAddImageClick}
+          aria-label="Add Image"
         >
           <FaCamera />
         </button>
@@ -73,7 +83,6 @@ export default function ImageInput() {
         accept="image/*"
         capture="environment"
         onChange={handleImageChange}
-        required
         className="hidden"
       />
     </div>

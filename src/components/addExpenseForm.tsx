@@ -1,6 +1,6 @@
 'use client';
 
-import { useActionState } from 'react';
+import { useActionState, useEffect, useState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { createReceipt } from '@/server/actions/receipt.actions';
 import ImageInput from './imageInput';
@@ -8,6 +8,13 @@ import { FormState } from '@/types/form-state.interface';
 
 export function AddExpenseForm() {
   const [state, formAction] = useActionState(createReceipt, {} as FormState);
+  const [clearImage, setClearImage] = useState(false);
+
+  useEffect(() => {
+    if (state.errors) {
+      setClearImage((val) => !val);
+    }
+  }, [state.errors]);
 
   return (
     <form action={formAction} className="flex flex-col space-y-1 mt-3">
@@ -26,11 +33,9 @@ export function AddExpenseForm() {
       <div className="h-3 flex self-center justify-self-center">
         {state.errors?.name && <small className="text-red-400">{state.errors?.name}</small>}
       </div>
-      <ImageInput />
+      <ImageInput clearTrigger={clearImage} />
       <div className="h-3 flex self-center justify-self-center">
-        {state.errors?.pictureError && (
-          <small className="text-red-400">{state.errors?.pictureError}</small>
-        )}
+        {state.errors?.image && <small className="text-red-400">{state.errors?.image}</small>}
       </div>
       <label htmlFor="category" className="text-sm font-medium">
         Category:
