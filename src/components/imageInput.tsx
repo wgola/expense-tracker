@@ -6,7 +6,7 @@ import { MdOutlineCancel } from 'react-icons/md';
 import Image from 'next/image';
 
 interface ImageInputProps {
-  clearTrigger?: boolean; // New prop to trigger clearing
+  clearTrigger?: boolean;
 }
 
 export default function ImageInput({ clearTrigger }: ImageInputProps) {
