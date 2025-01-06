@@ -5,11 +5,9 @@ export const receiptSchema = z.object({
   owner: z.string(),
   name: z.string({ message: 'Name is required' }).min(3, 'Name must be at least 3 characters long'),
   imageName: z.string(),
-  image: z
-    .custom<File>((val) => val instanceof File, 'Please upload a file')
-    .refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
-      message: 'Please choose another file type'
-    }),
+  image: z.instanceof(File).refine((file) => ACCEPTED_IMAGE_TYPES.includes(file.type), {
+    message: 'Please choose another file type'
+  }),
   category: z
     .string({ message: 'Category is required' })
     .min(3, 'Category must be at least 3 characters long'),

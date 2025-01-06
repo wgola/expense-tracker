@@ -11,11 +11,12 @@ import { revalidatePath } from 'next/cache';
 import { generateFileName } from '@/utils/generateFileName';
 import { uploadReceipt } from '@/server/storage/storage.functions';
 import { IReceipt } from '@/types/receipt.interface';
+import { FormReceipt } from '@/types/form-data.interface';
 
 export const createReceipt = async (_prevState: FormState, formData: FormData) => {
   const session = await getServerSession(authOptions);
 
-  const unvalidated: IReceipt = {
+  const unvalidated: FormReceipt = {
     owner: session?.user?.email as string,
     name: formData.get('name') as string,
     imageName: '',
@@ -28,8 +29,10 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
   const validated = receiptSchema.safeParse(unvalidated);
 
   if (!validated.success) {
-    const errors = convertZodErrors(validated.error);
-    console.log(errors);
+    const errors = {
+      ...convertZodErrors(validated.error),
+      ...(unvalidated.image.size === 0 && { image: 'Please upload an image' })
+    };
     return {
       errors,
       data: unvalidated
@@ -37,10 +40,11 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
   }
 
   try {
-    const receipt = { ...validated.data };
+    const { image, ...receiptToSave } = validated.data;
+    const receipt: IReceipt = receiptToSave;
 
-    const imageName = generateFileName(receipt, receipt.image);
-    const fileBuffer = Buffer.from(await receipt.image.arrayBuffer());
+    const imageName = generateFileName(receipt, image);
+    const fileBuffer = Buffer.from(await image.arrayBuffer());
 
     await uploadReceipt(imageName, fileBuffer);
 
