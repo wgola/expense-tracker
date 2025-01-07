@@ -2,6 +2,7 @@ import { IReceipt } from '@/types/receipt.interface';
 import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowCircleRight } from 'react-icons/fa';
+import { formatCurrency } from '@/utils/formatCurrency';
 
 export default function ExpenseListItem({
   receipt
@@ -20,7 +21,7 @@ export default function ExpenseListItem({
       <div className="card-body py-4 px-4">
         <h2 className="card-title">
           {receipt.name}
-          <div className="badge badge-secondary">{receipt.totalCost.toFixed(2)} zł</div>
+          <div className="badge badge-secondary">{formatCurrency(receipt.totalCost)}</div>
         </h2>
         <div className="card-actions justify-start">
           <div className="badge badge-outline">{receipt.date.toISOString().split('T')[0]}</div>
