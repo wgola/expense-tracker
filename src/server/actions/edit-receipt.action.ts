@@ -6,22 +6,23 @@ import { Receipt } from '@/server/database/models/receipt.model';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { editReceiptSchema } from '@/utils/editReceiptValidation';
+import { IEditReceipt } from '@/types/receipt.interface';
 
 export const editReceipt = async (_prevState: EditFormState, formData: FormData) => {
-  const validated = editReceiptSchema.safeParse({
-    name: formData.get('name'),
-    category: formData.get('category'),
+  const unvalidated: IEditReceipt = {
+    name: formData.get('name') as string,
+    category: formData.get('category') as string,
     date: new Date(formData.get('date') as string),
     totalCost: parseFloat(formData.get('totalCost') as string) || 0
-  });
+  };
+
+  const validated = editReceiptSchema.safeParse(unvalidated);
 
   if (!validated.success) {
     const errors = convertZodErrors(validated.error);
-    console.log('Receipt to edit not found2');
-
     return {
       errors,
-      data: validated.data
+      data: unvalidated
     };
   }
 
@@ -29,7 +30,7 @@ export const editReceipt = async (_prevState: EditFormState, formData: FormData)
   if (!id) {
     return {
       otherError: 'Receipt to edit not found',
-      data: validated.data
+      data: unvalidated
     };
   }
 
@@ -40,7 +41,7 @@ export const editReceipt = async (_prevState: EditFormState, formData: FormData)
   } catch {
     return {
       otherError: 'Error updating receipt',
-      data: validated.data
+      data: unvalidated
     };
   }
 

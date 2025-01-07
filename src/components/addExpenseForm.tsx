@@ -36,9 +36,7 @@ export function AddExpenseForm() {
       </div>
       <ImageInput clearTrigger={clearImage} />
       <div className="h-3 flex self-center justify-self-center">
-        {state.errors?.otherError && (
-          <small className="text-red-400">{state.errors?.otherError}</small>
-        )}
+        {state.errors?.image && <small className="text-red-400">{state.errors?.image}</small>}
       </div>
       <label htmlFor="category" className="text-sm font-medium">
         Category:

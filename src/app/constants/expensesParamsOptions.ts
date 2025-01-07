@@ -14,9 +14,12 @@ export const getValidatedAllExpensesParams = (params: {
   const page = params.page ? Math.max(parseInt(params.page, 10), 1) : 1;
   const limit = params.limit ? Math.max(parseInt(params.limit, 10), 1) : 5;
 
-  const validSorting = params.sort && SORTING_OPTIONS[params.sort as keyof typeof SORTING_OPTIONS];
-  const sort = validSorting && params.sort ? params.sort.split('_')[0] : 'date';
-  const order = validSorting ? (params.sort?.split('_')[1] as 'desc' | 'asc') || 'desc' : 'desc';
+  const validSorting =
+    params.sort &&
+    params.order &&
+    SORTING_OPTIONS[`${params.sort}_${params.order}` as keyof typeof SORTING_OPTIONS];
+  const sort = validSorting ? (params.sort as string) : 'date';
+  const order = validSorting ? (params.order as 'desc' | 'asc') : 'desc';
 
   return { page, limit, sort, order };
 };

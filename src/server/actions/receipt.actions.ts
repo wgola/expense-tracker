@@ -35,7 +35,7 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
     };
     return {
       errors,
-      data: validated.data
+      data: unvalidated
     };
   }
 

@@ -16,13 +16,16 @@ export default function Pagination({ totalPages }: Readonly<PaginationProps>) {
   const [isLast, setIsLast] = useState(false);
   const [page, setPage] = useState(1);
 
-  const changePage = (value: number) => {
-    const newPage = Math.min(Math.max(page + value, 1), totalPages);
-    const newParams = new URLSearchParams(params);
-    newParams.set('page', newPage.toString());
+  const changePage = useCallback(
+    (value: number) => {
+      const newPage = Math.min(Math.max(page + value, 1), totalPages);
+      const newParams = new URLSearchParams(params);
+      newParams.set('page', newPage.toString());
 
-    router.push(`${pathName}?${newParams.toString()}`, { scroll: false });
-  };
+      router.push(`${pathName}?${newParams.toString()}`, { scroll: false });
+    },
+    [page, params, router, pathName, totalPages]
+  );
 
   const previousPage = useCallback(() => changePage(-1), [changePage]);
   const nextPage = useCallback(() => changePage(1), [changePage]);
