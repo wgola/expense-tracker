@@ -27,8 +27,8 @@ export function AddExpenseForm() {
       </div>
       <ImageInput />
       <div className="h-3 flex self-center justify-self-center">
-        {state.errors?.pictureError && (
-          <small className="text-red-400">{state.errors?.pictureError}</small>
+        {state.errors?.otherError && (
+          <small className="text-red-400">{state.errors?.otherError}</small>
         )}
       </div>
       <label htmlFor="category" className="text-sm font-medium">

@@ -34,7 +34,7 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
   const file = formData.get('image') as File;
   if (!file) {
     return {
-      pictureError: 'No picture uploaded',
+      otherError: 'No picture uploaded',
       data: validated.data
     };
   }
@@ -52,7 +52,7 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
     await Receipt.create(receipt);
   } catch {
     return {
-      pictureError: 'Error uploading image',
+      otherError: 'Error uploading receipt',
       data: validated.data
     };
   }
