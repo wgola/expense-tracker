@@ -1,9 +1,10 @@
-import { IEditReceipt, IReceipt } from './receipt.interface';
+import { IEditReceipt } from './receipt.interface';
+import { FormReceipt } from './form-data.interface';
 
 export interface FormState {
   errors?: Record<string, string>;
   otherError?: string;
-  data?: IReceipt;
+  data?: FormReceipt;
 }
 
 export interface EditFormState {
