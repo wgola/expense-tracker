@@ -5,6 +5,7 @@ import { useFormStatus } from 'react-dom';
 import { createReceipt } from '@/server/actions/receipt.actions';
 import ImageInput from './imageInput';
 import { FormState } from '@/types/form-state.interface';
+import { format } from 'date-fns';
 
 export function AddExpenseForm() {
   const [state, formAction] = useActionState(createReceipt, {} as FormState);
@@ -61,7 +62,7 @@ export function AddExpenseForm() {
         name="date"
         placeholder="Enter date"
         className="input input-bordered w-full"
-        defaultValue={state.data?.date ? state.data.date.toISOString().split('T')[0] : undefined}
+        defaultValue={state.data?.date ? format(state.data.date, 'yyyy-MM-dd') : undefined}
         required
       />
       <div className="h-3 flex self-center justify-self-center">

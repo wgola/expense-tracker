@@ -3,6 +3,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { FaArrowCircleRight } from 'react-icons/fa';
 import { formatCurrency } from '@/utils/formatCurrency';
+import { format } from 'date-fns';
 
 export default function ExpenseListItem({
   receipt
@@ -24,7 +25,7 @@ export default function ExpenseListItem({
           <div className="badge badge-secondary">{formatCurrency(receipt.totalCost)}</div>
         </h2>
         <div className="card-actions justify-start">
-          <div className="badge badge-outline">{receipt.date.toISOString().split('T')[0]}</div>
+          <div className="badge badge-outline">{format(receipt.date, 'yyyy-MM-dd')}</div>
           <div className="badge badge-outline">{receipt.category}</div>
         </div>
         <div className="card-actions justify-end">
