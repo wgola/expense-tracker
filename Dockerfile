@@ -1,4 +1,4 @@
-FROM node:20.18.0-alpine3.19 as builder
+FROM node:20.18.0-alpine3.19 AS builder
 
 RUN apk add --no-cache libc6-compat=1.1.0-r4
 
@@ -26,7 +26,7 @@ EXPOSE 8080
 
 ENV PORT=8080
 
-RUN apk add --no-cache curl=8.9.1-r1
+RUN apk add --no-cache curl=8.11.1-r0
 HEALTHCHECK --interval=30s --timeout=3s \
     CMD curl -f http://localhost:3000 || exit 1
 

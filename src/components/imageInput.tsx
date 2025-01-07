@@ -38,7 +38,7 @@ export default function ImageInput({ clearTrigger }: ImageInputProps) {
 
   useEffect(() => {
     clearImagePreview();
-  }, [clearTrigger]);
+  }, [clearTrigger, clearImagePreview]);
 
   const onAddImageClick = useCallback(() => fileInputRef.current?.click(), []);
 

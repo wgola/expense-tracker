@@ -25,7 +25,7 @@ export const getTotalExpensesPaginated = async ({
   const owner = session?.user?.email;
 
   const receipts = await Receipt.aggregate<IReceipt>([
-    { $match: { owner: owner } },
+    { $match: { owner } },
     { $sort: { [sort]: sortDirection } },
     { $skip: skip },
     { $limit: limit }
@@ -38,7 +38,7 @@ export const getTotalExpensesPaginated = async ({
     })
   );
 
-  const totalReceipts = await Receipt.countDocuments({ owner: owner });
+  const totalReceipts = await Receipt.countDocuments({ owner });
   const totalPages = Math.ceil(totalReceipts / limit);
 
   return {

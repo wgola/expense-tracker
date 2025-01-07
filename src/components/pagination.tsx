@@ -16,36 +16,36 @@ export default function Pagination({ totalPages }: Readonly<PaginationProps>) {
   const [isLast, setIsLast] = useState(false);
   const [page, setPage] = useState(1);
 
-  const changePage = useCallback(
-    (value: number) => {
-      const newPage = Math.min(Math.max(page + value, 1), totalPages);
-      const newParams = new URLSearchParams(params);
-      newParams.set('page', newPage.toString());
+  const changePage = (value: number) => {
+    const newPage = Math.min(Math.max(page + value, 1), totalPages);
+    const newParams = new URLSearchParams(params);
+    newParams.set('page', newPage.toString());
 
-      router.push(`${pathName}?${newParams.toString()}`, { scroll: false });
-    },
-    [page, params, router, pathName]
-  );
+    router.push(`${pathName}?${newParams.toString()}`, { scroll: false });
+  };
+
+  const previousPage = useCallback(() => changePage(-1), [changePage]);
+  const nextPage = useCallback(() => changePage(1), [changePage]);
 
   useEffect(() => {
     const currPage = parseInt(params.get('page') || '1');
     const newPage = Math.max(currPage, 1);
-    newPage == 1 ? setIsFirst(true) : setIsFirst(false);
-    newPage == totalPages ? setIsLast(true) : setIsLast(false);
+    setIsFirst(newPage === 1);
+    setIsLast(newPage === totalPages);
 
     setPage(newPage);
-  }, [params]);
+  }, [params, totalPages]);
 
   return (
     <div className="flex join mt-5 justify-center">
-      <button className="join-item btn" disabled={isFirst} onClick={() => changePage(-1)}>
+      <button className="join-item btn" disabled={isFirst} onClick={previousPage}>
         «
       </button>
 
       <button className="join-item btn hidden sm:block">Page {page}</button>
       <button className="join-item btn sm:hidden">{page}</button>
 
-      <button className="join-item btn" disabled={isLast} onClick={() => changePage(1)}>
+      <button className="join-item btn" disabled={isLast} onClick={nextPage}>
         »
       </button>
     </div>

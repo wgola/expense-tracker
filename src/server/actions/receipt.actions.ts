@@ -34,7 +34,7 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
       ...(unvalidated.image.size === 0 && { image: 'Please upload an image' })
     };
     return {
-      otherError: 'No picture uploaded',
+      errors,
       data: validated.data
     };
   }
