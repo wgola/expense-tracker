@@ -14,7 +14,7 @@ export default async function Home() {
       <div className="flex flex-wrap gap-1 justify-center mt-3">
         <MainPageLink href="/home/add-expense">Add new expense</MainPageLink>
         <MainPageLink href="/home/statistics">View your stats</MainPageLink>
-        <MainPageLink href="/home/expenses">Your expenses</MainPageLink>
+        <MainPageLink href="/home/expenses">View your expenses</MainPageLink>
       </div>
       <div className="divider" />
       <h2 className="text-xl font-bold my-2 text-center">Your latest expenses:</h2>
