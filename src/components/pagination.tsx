@@ -1,9 +1,13 @@
 'use client';
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
-export default function Pagination() {
+interface PaginationProps {
+  totalPages: number;
+}
+
+export default function Pagination({ totalPages }: Readonly<PaginationProps>) {
   const params = useSearchParams();
   const router = useRouter();
   const pathName = usePathname();
@@ -12,22 +16,24 @@ export default function Pagination() {
   const [isLast, setIsLast] = useState(false);
   const [page, setPage] = useState(1);
 
-  const changePage = (value: number) => {
-    const newParams = new URLSearchParams(params);
-    newParams.set('page', (page + value).toString());
+  const changePage = useCallback(
+    (value: number) => {
+      const newPage = Math.min(Math.max(page + value, 1), totalPages);
+      const newParams = new URLSearchParams(params);
+      newParams.set('page', newPage.toString());
 
-    router.push(`${pathName}?${newParams.toString()}`, { scroll: false });
-  };
+      router.push(`${pathName}?${newParams.toString()}`, { scroll: false });
+    },
+    [page, params, router, pathName]
+  );
 
   useEffect(() => {
     const currPage = parseInt(params.get('page') || '1');
-    if (currPage == 1) {
-      setIsFirst(true);
-    } else {
-      setIsFirst(false);
-    }
+    const newPage = Math.max(currPage, 1);
+    newPage == 1 ? setIsFirst(true) : setIsFirst(false);
+    newPage == totalPages ? setIsLast(true) : setIsLast(false);
 
-    setPage(currPage);
+    setPage(newPage);
   }, [params]);
 
   return (
@@ -36,7 +42,7 @@ export default function Pagination() {
         «
       </button>
 
-      <button className="join-item btn hidden sm:block">Strona {page}</button>
+      <button className="join-item btn hidden sm:block">Page {page}</button>
       <button className="join-item btn sm:hidden">{page}</button>
 
       <button className="join-item btn" disabled={isLast} onClick={() => changePage(1)}>

@@ -7,32 +7,47 @@ import { getReceiptUrlByName } from '@/server/storage/storage.functions';
 interface PaginationOptions {
   page: number;
   limit: number;
-  sortBy: string;
-  sortOrder: 'asc' | 'desc';
+  sort: string;
+  order: 'asc' | 'desc';
 }
 
 export const getTotalExpensesPaginated = async ({
   page,
   limit,
-  sortBy,
-  sortOrder
+  sort,
+  order
 }: PaginationOptions) => {
   const session = await getServerSession(authOptions);
 
-  const sortDirection = sortOrder === 'asc' ? 1 : -1;
+  const sortDirection = order === 'asc' ? 1 : -1;
   const skip = (page - 1) * limit;
 
-  return Promise.all(
-    (
-      await Receipt.aggregate<IReceipt>([
-        { $match: { owner: session?.user?.email ?? '' } },
-        { $sort: { [sortBy]: sortDirection } },
-        { $skip: skip },
-        { $limit: limit }
-      ]).exec()
-    ).map(async (receipt) => {
+  const owner = session?.user?.email;
+
+  const receipts = await Receipt.aggregate<IReceipt>([
+    { $match: { owner: owner } },
+    { $sort: { [sort]: sortDirection } },
+    { $skip: skip },
+    { $limit: limit }
+  ]).exec();
+
+  const enrichedReceipts = await Promise.all(
+    receipts.map(async (receipt) => {
       receipt.imageName = await getReceiptUrlByName(receipt.imageName);
       return receipt;
     })
   );
+
+  const totalReceipts = await Receipt.countDocuments({ owner: owner });
+  const totalPages = Math.ceil(totalReceipts / limit);
+
+  return {
+    receipts: enrichedReceipts,
+    metadata: {
+      total: totalReceipts,
+      page,
+      limit,
+      totalPages
+    }
+  };
 };
