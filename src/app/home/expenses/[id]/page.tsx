@@ -26,7 +26,7 @@ export default async function ExpenseDetails({
             {format(new Date(receiptToPass.createdAt), 'yyyy-MM-dd HH:mm')}
           </span>
         </div>
-        <div className="divider md:divider-horizontal"></div>
+        <div className="divider md:divider-horizontal" />
         <div>
           Latest update:
           <span className="border m-1 p-1">

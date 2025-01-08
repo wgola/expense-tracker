@@ -1,6 +1,6 @@
 'use client';
 
-import { editReceipt } from '@/server/actions/edit-receipt.action';
+import { editReceipt } from '@/server/actions/receipt.actions';
 import { EditFormState } from '@/types/form-state.interface';
 import { ISavedReceipt } from '@/types/receipt.interface';
 import Image from 'next/image';
