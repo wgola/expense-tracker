@@ -44,7 +44,7 @@ async function AllExpenses({
 
   return (
     <>
-      <div className="flex flex-col gap-3 p-5 mt-5">
+      <div className="flex flex-col gap-3 p-2">
         {expenses.length ? (
           expensesList
         ) : (

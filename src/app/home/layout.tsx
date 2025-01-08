@@ -15,7 +15,7 @@ export default async function HomeLayout({ children }: Readonly<PropsWithChildre
     return (
       <>
         <Navbar />
-        <div className="mb-3 max-w-xs mx-auto lg:max-w-lg">{children}</div>
+        <div className="mt-5 mb-3 max-w-xs mx-auto md:max-w-xl px-2">{children}</div>
       </>
     );
   }

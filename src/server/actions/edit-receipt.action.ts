@@ -13,7 +13,7 @@ export const editReceipt = async (_prevState: EditFormState, formData: FormData)
     name: formData.get('name') as string,
     category: formData.get('category') as string,
     date: new Date(formData.get('date') as string),
-    totalCost: parseFloat(formData.get('totalCost') as string) || 0
+    totalCost: parseFloat(formData.get('totalCost') as string)
   };
 
   const validated = editReceiptSchema.safeParse(unvalidated);

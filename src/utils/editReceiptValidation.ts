@@ -6,5 +6,5 @@ export const editReceiptSchema = z.object({
   date: z.date().refine((date) => date <= new Date(), {
     message: 'Date should be from the past'
   }),
-  totalCost: z.number()
+  totalCost: z.number().nonnegative('Total cost must be a positive number')
 });

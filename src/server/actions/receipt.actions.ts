@@ -23,7 +23,7 @@ export const createReceipt = async (_prevState: FormState, formData: FormData) =
     image: formData.get('image') as File,
     category: formData.get('category') as string,
     date: new Date(formData.get('date') as string),
-    totalCost: parseFloat(formData.get('totalCost') as string) || 0
+    totalCost: parseFloat(formData.get('totalCost') as string)
   };
 
   const validated = receiptSchema.safeParse(unvalidated);
