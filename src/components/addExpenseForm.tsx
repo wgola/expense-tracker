@@ -18,7 +18,7 @@ export function AddExpenseForm() {
   }, [state.errors]);
 
   return (
-    <form action={formAction} className="flex flex-col space-y-1 mt-3">
+    <form action={formAction} className="w-full flex flex-col space-y-1 mt-2">
       <label htmlFor="name" className="text-sm font-medium">
         Name:
       </label>
@@ -72,17 +72,19 @@ export function AddExpenseForm() {
         Total cost:
       </label>
       <input
-        type="text"
+        type="number"
+        step="0.01"
         id="totalCost"
         name="totalCost"
         placeholder="Receipt price"
         defaultValue={state.data?.totalCost}
         className="input input-bordered w-full"
       />
-      <div className="h-3 flex self-center justify-self-center">
-        {state.errors?.totalcost && (
-          <small className="text-red-400">{state.errors?.totalcost}</small>
-        )}
+      <div className="h-5 flex self-center justify-self-center">
+        {(state.errors?.totalCost && (
+          <small className="text-red-400">{state.errors?.totalCost}</small>
+        )) ||
+          (state.otherError && <small className="text-red-400">{state.otherError}</small>)}
       </div>
       <SubmitButton />
     </form>

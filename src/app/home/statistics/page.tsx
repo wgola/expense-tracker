@@ -19,7 +19,7 @@ export default async function StatisticsPage({
 
   return (
     <>
-      <h1 className="text-3xl font-bold mt-8">Your stats</h1>
+      <h1 className="text-3xl font-bold">Your stats</h1>
       <div className="flex flex-col gap-3">
         <Suspense fallback={<LoadingPlaceholder />}>
           <GeneralStatisticsSection />
