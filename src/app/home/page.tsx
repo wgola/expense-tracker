@@ -10,11 +10,11 @@ export default async function Home() {
 
   return (
     <div>
-      <h1 className="text-3xl font-bold mt-8 text-center">Hello, {session?.user?.name}!</h1>
+      <h1 className="text-3xl font-bold text-center">Hello, {session?.user?.name}!</h1>
       <div className="flex flex-wrap gap-1 justify-center mt-3">
         <MainPageLink href="/home/add-expense">Add new expense</MainPageLink>
         <MainPageLink href="/home/statistics">View your stats</MainPageLink>
-        <MainPageLink href="/home/expenses">Your expenses</MainPageLink>
+        <MainPageLink href="/home/expenses">View your expenses</MainPageLink>
       </div>
       <div className="divider" />
       <h2 className="text-xl font-bold my-2 text-center">Your latest expenses:</h2>

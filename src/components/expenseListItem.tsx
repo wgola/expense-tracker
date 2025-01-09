@@ -10,7 +10,7 @@ export default function ExpenseListItem({
 }: Readonly<{ receipt: IReceipt & { _id?: string } }>) {
   return (
     <div className="card card-side bg-base-200 w-full h-[125px] border-2 border-gray-200">
-      <figure className="relative w-1/3 lg:w-2/5">
+      <figure className="relative w-1/3 md:w-2/5">
         <Image
           src={receipt.imageName}
           alt={receipt.name}
@@ -19,7 +19,7 @@ export default function ExpenseListItem({
           priority
         />
       </figure>
-      <div className="card-body py-4 px-4">
+      <div className="card-body p-1 md:p-4">
         <h2 className="card-title">
           {receipt.name}
           <div className="badge badge-secondary">{formatCurrency(receipt.totalCost)}</div>
