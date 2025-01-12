@@ -28,6 +28,132 @@ Whole application consists of 7 services build with different technologies:
 - [`MongoDB`](https://www.mongodb.com) - as an expenses information database
 - [`PostgreSQL`](https://www.postgresql.org.pl) - as a database for `Keycloak`
 
+## Retrieving statistics
+
+For retrieval of statistics, the application leverages the power of `MongoDB` aggregation framework.
+The statistics are calculated based on the user's expenses. Some example of these statistics are:
+
+- **Total expenses** - sum of all user expenses in a given period or overall if no period is provided:
+
+```typescript
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import { Receipt } from '@/server/database/models/receipt.model';
+
+export const getTotalExpenses = async (dateFrom: Date | null, dateTo: Date | null) => {
+  const session = await getServerSession(authOptions); // get user session
+
+  return Receipt.aggregate<{ totalAmount: number }>([
+    { $match: { owner: session?.user?.email ?? '' } }, // filter by user
+    {
+      $match: {
+        // filter by date
+        date: {
+          $gte: dateFrom ?? new Date(0),
+          $lte: dateTo ?? new Date()
+        }
+      }
+    },
+    {
+      $group: {
+        _id: null,
+        totalAmount: { $sum: '$totalCost' } // sum all expenses
+      }
+    },
+    {
+      $project: {
+        _id: 0,
+        totalAmount: 1 // return only total amount
+      }
+    }
+  ])
+    .exec()
+    .then((result) => result[0]?.totalAmount || 0); // return total amount or 0 if no expenses
+};
+```
+
+- **Expenses by category** - sum of all user expenses grouped by category:
+
+```typescript
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import { Receipt } from '@/server/database/models/receipt.model';
+
+export const getTotalExpensesPerCategory = async (dateFrom: Date | null, dateTo: Date | null) => {
+  const session = await getServerSession(authOptions); // get user session
+
+  return await Receipt.aggregate<{ category: string; totalAmount: number }>([
+    { $match: { owner: session?.user?.email ?? '' } }, // filter by user
+    {
+      $match: {
+        // filter by date
+        date: {
+          $gte: dateFrom ?? new Date(0),
+          $lte: dateTo ?? new Date()
+        }
+      }
+    },
+    {
+      $group: {
+        _id: '$category', // group by category
+        totalAmount: { $sum: '$totalCost' } // sum all expenses
+      }
+    },
+    {
+      $project: {
+        // return only category and total amount
+        _id: 0,
+        category: '$_id',
+        totalAmount: 1
+      }
+    },
+    { $sort: { totalAmount: -1 } } // sort by total amount descending
+  ]).exec();
+};
+```
+
+- **Expenses by date** - sum of all user expenses grouped by date:
+
+```typescript
+import { getServerSession } from 'next-auth';
+import { authOptions } from '@/app/api/auth/[...nextauth]/authOptions';
+import { Receipt } from '@/server/database/models/receipt.model';
+
+export const getTotalExpensesPerDate = async (dateFrom: Date | null, dateTo: Date | null) => {
+  const session = await getServerSession(authOptions); // get user session
+
+  return await Receipt.aggregate<{ date: string; totalAmount: number }>([
+    { $match: { owner: session?.user?.email ?? '' } }, // filter by user
+    {
+      $match: {
+        // filter by date
+        date: {
+          $gte: dateFrom ?? new Date(0),
+          $lte: dateTo ?? new Date()
+        }
+      }
+    },
+    {
+      $group: {
+        _id: { $dateToString: { format: '%Y-%m-%d', date: '$date' } }, // group by date
+        totalAmount: { $sum: '$totalCost' } // sum all expenses
+      }
+    },
+    {
+      $project: {
+        // return only date and total amount
+        _id: 0,
+        date: '$_id',
+        totalAmount: 1
+      }
+    },
+    { $sort: { date: 1 } } // sort by date ascending
+  ]).exec();
+};
+```
+
+Statistics are calculated on the server side and then displayed for the user in his statistics dashboard.
+
 ## 💻 Running the app locally
 
 There are two possibilities of running the app:
