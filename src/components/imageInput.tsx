@@ -52,7 +52,7 @@ export default function ImageInput({ clearTrigger }: Readonly<ImageInputProps>) 
         <div className="relative flex justify-center">
           {loading && (
             <div className="absolute top-0 left-0 w-full h-full bg-gray-300 bg-opacity-60 flex flex-col items-center justify-center">
-              <span className="loading loading-spinner loading-xl mb-2 black"></span>
+              <span className="loading loading-spinner loading-xl mb-2 black" />
               <span className="text-black font-bold">Extracting total cost from receipt...</span>
             </div>
           )}
