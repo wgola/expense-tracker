@@ -37,7 +37,8 @@ next-env.d.ts
 
 reports
 realm-conf.json
-.env
+.env.local
+.env.prod
 
 .idea
 

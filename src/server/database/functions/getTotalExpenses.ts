@@ -29,5 +29,5 @@ export const getTotalExpenses = async (dateFrom: Date | null, dateTo: Date | nul
     }
   ])
     .exec()
-    .then((result) => result[0].totalAmount || 0);
+    .then((result) => result[0]?.totalAmount || 0);
 };

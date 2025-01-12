@@ -7,7 +7,16 @@ const nextConfig = {
     }
   },
   images: {
-    domains: ['localhost']
+    remotePatterns: [
+      {
+        protocol: 'http',
+        hostname: 'localhost'
+      },
+      {
+        protocol: 'http',
+        hostname: 'minio'
+      }
+    ]
   }
 };
 
