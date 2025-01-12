@@ -12,7 +12,7 @@ application with a purpose of analyzing receipts and expenses for different day-
 ## ⭐ Main features
 
 - create a receipt entry with data like category and date
-- extract total cost from the receipt using AI
+- extract total cost from the receipt using AI ([receipt-analyzer](./receipt-analyzer))
 - display a list of all user receipts
 - provide statistics for the user
 
