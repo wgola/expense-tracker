@@ -1,8 +1,7 @@
-from typing import IO
 from PIL import Image, ImageOps, ImageFilter
 
 
-def preprocess_image(file: IO) -> Image:
+def preprocess_image(file):
     image = Image.open(file)
 
     image = ImageOps.grayscale(image)

@@ -6,10 +6,12 @@ import { createReceipt } from '@/server/actions/receipt.actions';
 import ImageInput from './imageInput';
 import { FormState } from '@/types/form-state.interface';
 import { format } from 'date-fns';
+import { useTotalReceiptCost } from '@/hooks/useTotalReceiptCost';
 
 export function AddExpenseForm() {
   const [state, formAction] = useActionState(createReceipt, {} as FormState);
   const [clearImage, setClearImage] = useState(false);
+  const { totalCost, loading } = useTotalReceiptCost();
 
   useEffect(() => {
     if (state.errors) {
@@ -71,15 +73,19 @@ export function AddExpenseForm() {
       <label htmlFor="totalCost" className="text-sm font-medium">
         Total cost:
       </label>
-      <input
-        type="number"
-        step="0.01"
-        id="totalCost"
-        name="totalCost"
-        placeholder="Receipt price"
-        defaultValue={state.data?.totalCost}
-        className="input input-bordered w-full"
-      />
+      <label className="input input-bordered flex items-center gap-2">
+        <input
+          disabled={loading}
+          type="number"
+          step="0.01"
+          id="totalCost"
+          name="totalCost"
+          placeholder="Receipt price"
+          defaultValue={totalCost ?? state.data?.totalCost}
+          className="grow"
+        />
+        <span className="text-gray-500">PLN</span>
+      </label>
       <div className="h-5 flex self-center justify-self-center">
         {(state.errors?.totalCost && (
           <small className="text-red-400">{state.errors?.totalCost}</small>

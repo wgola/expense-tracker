@@ -1,5 +1,6 @@
 services:
   mongodb:
+    container_name: mongodb
     image: mongo:8.0.1
     ports:
       - '27017:27017'
@@ -7,26 +8,31 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_USERNAME}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD}
       MONGO_INITDB_DATABASE: ${MONGO_DB}
+    env_file:
+      - .env.prod
     volumes:
       - mongo_data:/data/db
 
   keycloak:
+    container_name: keycloak
     image: quay.io/keycloak/keycloak:26.0.0
     command: start-dev
     ports:
       - '8080:8080'
     environment:
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://localhost:5432/${POSTGRES_DB}
+      KC_DB_URL: jdbc:postgresql://postgres:5432/${POSTGRES_DB}
       KC_DB_USERNAME: ${POSTGRES_USER}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD}
       KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN}
       KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+    env_file:
+      - .env.prod
     depends_on:
       - postgres
-    network_mode: host
 
   postgres:
+    container_name: postgres
     image: postgres:16.2
     ports:
       - '5432:5432'
@@ -34,24 +40,29 @@ services:
       POSTGRES_DB: ${POSTGRES_DB}
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    env_file:
+      - .env.prod
     volumes:
       - pg_data:/var/lib/postgresql/data
 
   minio:
+    container_name: minio
     image: quay.io/minio/minio
     command: server /data --console-address ":9001"
     ports:
       - '9000:9000'
       - '9001:9001'
-    volumes:
-      - 'minio_data:/data'
     environment:
       MINIO_ROOT_USER: ${MINIO_USERNAME}
       MINIO_ROOT_PASSWORD: ${MINIO_PASSWORD}
+    env_file:
+      - .env.prod
+    volumes:
+      - 'minio_data:/data'
 
   ollama:
-    image: ollama/ollama:0.5.4
     container_name: ollama
+    image: ollama/ollama:0.5.4
     ports:
       - '11434:11434'
     volumes:
@@ -61,14 +72,24 @@ services:
         reservations:
           devices:
             - capabilities: [gpu]
+    env_file:
+      - .env.prod
 
   receipt-analyzer:
-    build: './receipt-analyzer'
     container_name: receipt-analyzer
+    build: './receipt-analyzer'
     ports:
       - '5000:5000'
-    environment:
-      - OLLAMA_API_BASE_URL=http://ollama:11434
+    env_file:
+      - .env.prod
+
+  expense-tracker:
+    container_name: expense-tracker
+    build: .
+    ports:
+      - '3000:8080'
+    env_file:
+      - .env.prod
 
 volumes:
   mongo_data:

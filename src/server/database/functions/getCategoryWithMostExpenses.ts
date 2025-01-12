@@ -24,5 +24,5 @@ export const getCategoryWithMostExpenses = async () => {
     { $limit: 1 }
   ])
     .exec()
-    .then((result) => result[0].category);
+    .then((result) => result[0]?.category);
 };

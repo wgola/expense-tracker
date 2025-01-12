@@ -3,8 +3,12 @@ import KeycloakProvider from 'next-auth/providers/keycloak';
 import { JWT } from 'next-auth/jwt';
 
 const clientId = process.env.KEYCLOAK_CLIENT_ID ?? '';
+const jwksEndpoint = process.env.KEYCLOAK_JWKS_ENDPOINT ?? '';
+const authorizationUrl = process.env.KEYCLOAK_AUTHORIZATION_URL ?? '';
 const clientSecret = process.env.KEYCLOAK_CLIENT_SECRET ?? '';
 const issuer = process.env.KEYCLOAK_ISSUER ?? '';
+const tokenUrl = process.env.KEYCLOAK_TOKEN_URL ?? '';
+const userinfoUrl = process.env.KEYCLOAK_USERINFO_URL ?? '';
 
 function requestRefreshOfAccessToken(token: JWT) {
   return fetch(`${issuer}/protocol/openid-connect/token`, {
@@ -23,11 +27,22 @@ function requestRefreshOfAccessToken(token: JWT) {
 export const authOptions: AuthOptions = {
   providers: [
     KeycloakProvider({
+      jwks_endpoint: jwksEndpoint,
+      wellKnown: undefined,
       clientId,
       clientSecret,
-      issuer
+      issuer,
+      authorization: {
+        params: {
+          scope: 'openid email profile'
+        },
+        url: authorizationUrl
+      },
+      token: tokenUrl,
+      userinfo: userinfoUrl
     })
   ],
+  secret: process.env.NEXTAUTH_SECRET,
   session: {
     maxAge: 60 * 30, // 30 minutes
     strategy: 'jwt'
